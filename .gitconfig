@@ -1,0 +1,16 @@
+[user]
+	name = Lukas Ender
+	email = hello@lukasender.at
+
+[push]
+	default = current
+
+[alias]
+	lol = log --pretty=oneline --abbrev-commit --graph --decorate
+	lg = log --color --graph \
+             --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' \
+             --abbrev-commit --
+	st = status
+	fixup = !git commit --fixup $(git rev-parse HEAD)
+[rebase]
+	autosquash = true
