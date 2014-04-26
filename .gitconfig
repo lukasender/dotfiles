@@ -14,7 +14,7 @@
 	fixup = !git commit --fixup $(git rev-parse HEAD)
 	co = checkout
 	cm = commit
-	p = push
+	pu = push
 	pl = pull
 	remotes = remote -v
 	tags = tag -l
