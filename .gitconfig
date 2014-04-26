@@ -12,5 +12,13 @@
              --abbrev-commit --
 	st = status
 	fixup = !git commit --fixup $(git rev-parse HEAD)
+	co = checkout
+	cm = commit
+	p = push
+	pl = pull
+	remotes = remote -v
+	tags = tag -l
+	branches = branch -a
+	d = diff
 [rebase]
 	autosquash = true
