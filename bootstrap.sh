@@ -1,18 +1,25 @@
 #!/usr/bin/env bash
-cd "$(dirname "${BASH_SOURCE}")"
-git pull origin master
-function doIt() {
-	rsync --exclude ".git/" --exclude ".DS_Store" --exclude "bootstrap.sh" \
-		--exclude "README.md" --exclude "LICENSE" -av --no-perms . ~
-	source ~/.bash_profile
-}
-if [ "$1" == "--force" -o "$1" == "-f" ]; then
-	doIt
-else
-	read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1
-	echo
-	if [[ $REPLY =~ ^[Yy]$ ]]; then
-		doIt
-	fi
+
+if [[ "$1" = "--force" ]];
+    then
+	echo "about to bootstrap."
+    else
+        echo "you didn't force (--force) me to do it!"
+        echo "i'm refusing to execute."
+        exit 1
 fi
-unset doIt
+
+if [[ ! -d $HOME/.config/ ]]; then
+    mkdir $HOME/.config
+fi
+
+stow --target=$HOME git
+stow --target=$HOME osx
+stow --target=$HOME shell
+stow --target=$HOME vim
+
+if [[ ! -d $HOME/.pip_cache/ ]]; then
+    mkdir $HOME/.pip_cache
+fi
+
+echo "all set and done. you're good to go! :)"
