@@ -25,6 +25,6 @@
 	autosquash = true
 
 [core]
-	excludesfile = ~/.gitignore
+	excludesfile = /Users/lui/.gitignore
 	precomposeunicode = false
 
