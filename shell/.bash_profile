@@ -8,6 +8,9 @@ unset file
 # init z   https://github.com/rupa/z
 #. ~/code/z/z.sh
 
+# enable 256 color mode
+TERM=xterm-256color
+
 # init rvm
 #source ~/.rvm/scripts/rvm
 

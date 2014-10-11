@@ -38,6 +38,20 @@ set title						" change the terminal's title
 set nobackup
 set noswapfile
 
+filetype plugin indent on
+
+if has('autocmd')
+	autocmd filetype python set expandtab
+endif
+
+if &t_Co >= 256 || has("gui_running")
+	colorscheme mustang
+endif
+
+if &t_Co > 2 || has("gui_running")
+	syntax on
+endif
+
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 " http://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work
 cmap w!! w !sudo tee > /dev/null %
