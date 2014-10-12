@@ -24,6 +24,8 @@ set backspace=indent,eol,start  " allow backspacing over everything in insert mo
 set autoindent                  " always set autoindenting on
 set copyindent                  " copy the previous indentation on autoindenting
 set number                      " always show line numbers
+set relativenumber
+set ruler
 set shiftwidth=4                " number of spaces to use for autoindenting
 set shiftround                  " use multiple of shiftwidth when indenting with '<' and '>'
 set showmatch                   " set show matching parenthesis
@@ -34,9 +36,18 @@ set smartcase                   " ignore case if search pattern is all lowercase
 set smarttab                    " insert tabs on the start of a line according to shiftwidth, not tabstop
 set hlsearch                    " highlight search terms
 set incsearch                   " show search matches as you type
+" use Perl/Python compativle regex formatting
+nnoremap / /\v
+vnoremap / /\v
+
+set textwidth=79
+set formatoptions=qrn1
+set colorcolumn=80
 
 set history=1000                " remember more commands and search history
 set undolevels=1000             " use many muchos levels of undo
+set wildmenu
+set wildmode=list:longest
 set wildignore=*.swp,*.bak,*.pyc,*.class
 set title                       " change the terminal's title
 set visualbell                  " don't beep
@@ -48,6 +59,9 @@ set noswapfile
 set showmode
 set showcmd
 set cursorline                  " highlight cursor line
+set laststatus=2
+
+set ttyfast                     " indicate a fast connection
 
 filetype plugin indent on
 
@@ -76,5 +90,17 @@ cmap w!! w !sudo tee > /dev/null %
 
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%81v.\+/
-set ruler
 
+" window management
+nnoremap <leader>w <C-w>v
+nnoremap <leader>s <C-w>s
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" guioptions
+set guioptions-=r           " remove scrollbar
+set guioptions-=R           " remove scrollbar
+set guioptions-=l           " remove scrollbar
+set guioptions-=L           " remove scrollbar
