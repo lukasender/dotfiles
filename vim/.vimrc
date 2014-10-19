@@ -136,7 +136,7 @@ set guioptions-=R           " remove scrollbar
 set guioptions-=l           " remove scrollbar
 set guioptions-=L           " remove scrollbar
 " Powerline setup
-set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 9
+set guifont=Inconsolata-dz\ for\ Powerline:h12
 set laststatus=2            " tell VIM to always put a status line in, even
                             "    if there is only one window
 
