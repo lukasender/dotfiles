@@ -1,5 +1,5 @@
 # set editor
-export EDITOR='subl -w'
+export EDITOR='vim'
 
 # Larger bash history (allow 32³ entries; default is 500)
 export HISTSIZE=32768
@@ -17,3 +17,7 @@ export GREP_OPTIONS="--color=auto"
 
 # .vimrc
 export VIMRC=~/.vimrc
+
+export C_INCLUDE_PATH=/usr/local/include
+export CPLUS_INCLUDE_PATH=/usr/local/include
+export LIBRARY_PATH=/usr/local/lib
