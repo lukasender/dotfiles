@@ -16,3 +16,6 @@ Thumbs.db
 # IDEs
 .idea
 .ropeproject
+
+# Searchtools
+.agignore
