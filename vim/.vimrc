@@ -21,7 +21,9 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'airblade/vim-gitgutter'
 Plug 'klen/python-mode'
 Plug 'davidhalter/jedi-vim'
-Plug 'pangloss/vim-javascript'
+" Plug 'pangloss/vim-javascript'
+Plug 'scrooloose/syntastic'
+Plug 'terryma/vim-multiple-cursors'
 
 call plug#end() " handles 'filetype off', 'filetype plugin indent on' and
                 " 'syntax on' automatically
@@ -130,6 +132,19 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
+" make VIM command line movement behave like a modern command line
+:cnoremap <C-a>  <Home>
+:cnoremap <C-b>  <Left>
+:cnoremap <C-f>  <Right>
+:cnoremap <C-d>  <Delete>
+:cnoremap <M-b>  <S-Left>
+:cnoremap <M-f>  <S-Right>
+:cnoremap <M-d>  <S-right><Delete>
+:cnoremap <Esc>b <S-Left>
+:cnoremap <Esc>f <S-Right>
+:cnoremap <Esc>d <S-right><Delete>
+:cnoremap <C-g>  <C-c>
+
 " Quote words under cursor
 nnoremap <leader>" viW<esc>a"<esc>gvo<esc>i"<esc>gvo<esc>3l
 nnoremap <leader>' viW<esc>a'<esc>gvo<esc>i'<esc>gvo<esc>3l
@@ -195,6 +210,10 @@ let g:pymode_rope = 0
 let g:pymode_lint_minheight = 8
 let g:pymode_lint_maxheight = 10
 let g:pymode_lint_ignore = "C0110,F0401,W0403,E123,E124,E126"
+
+" syntastic config
+let g:syntastic_javascript_checkers = ['jshint'] " requires 'npm -g install jshint'
+let g:syntastic_json_checkers = ['jsonlint'] " requires npm install -g jsonlint
 
 " gitgutter colors
 highlight clear SignColumn
