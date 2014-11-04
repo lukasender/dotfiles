@@ -24,6 +24,8 @@ Plug 'davidhalter/jedi-vim'
 " Plug 'pangloss/vim-javascript'
 Plug 'scrooloose/syntastic'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'vim-scripts/dbext.vim'
+Plug 'Glench/Vim-Jinja2-Syntax'
 
 call plug#end() " handles 'filetype off', 'filetype plugin indent on' and
                 " 'syntax on' automatically
@@ -39,7 +41,7 @@ set encoding=utf-8
 set termencoding=utf-8
 
 set hidden                      " hide buffers instead of closing them
-set nowrap                      " to not wrap lines
+set nowrap                      " do not wrap lines
 set tabstop=4                   " a tab is four spaces
 set softtabstop=4
 set expandtab
@@ -154,6 +156,9 @@ nnoremap <leader>' viW<esc>a'<esc>gvo<esc>i'<esc>gvo<esc>3l
 vnoremap <leader>" <esc>a"<esc>gvo<esc>i"<esc>gvo<esc>ll
 vnoremap <leader>' <esc>a'<esc>gvo<esc>i'<esc>gvo<esc>ll
 
+" Ag
+nnoremap <leader>a :Ag
+
 " Use shift-H and shift-L for move to beginning/end
 nnoremap H 0
 nnoremap L $
@@ -191,6 +196,35 @@ set guioptions-=r           " remove scrollbar
 set guioptions-=R           " remove scrollbar
 set guioptions-=l           " remove scrollbar
 set guioptions-=L           " remove scrollbar
+set gcr=a:blinkon0          " turn of the blinking cursor
+" toggle bg for (solarized colorscheme)
+nnoremap <leader>bg :call ToggleBackground()<cr>
+let g:is_light = 1
+function! ToggleBackground()
+    if g:is_light
+        set background=dark
+        let g:is_light = 0
+
+        " gitgutter colors
+        highlight clear SignColumn
+        highlight GitGutterAdd ctermfg=green guifg=green
+        highlight GitGutterChange ctermfg=yellow guifg=yellow
+        highlight GitGutterDelete ctermfg=red guifg=red
+        highlight GitGutterChangeDelete ctermfg=yellow guifg=yellow
+    else
+        set background=light
+        let g:is_light = 1
+
+        " gitgutter colors
+        highlight clear SignColumn
+        highlight GitGutterAdd ctermfg=green guifg=darkgreen
+        highlight GitGutterChange ctermfg=yellow guifg=darkyellow
+        highlight GitGutterDelete ctermfg=red guifg=darkred
+        highlight GitGutterChangeDelete ctermfg=yellow guifg=darkyellow
+    endif
+
+endfunction
+
 " Powerline setup
 set guifont=Inconsolata-dz\ for\ Powerline:h12
 set laststatus=2            " tell VIM to always put a status line in, even
