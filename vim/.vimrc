@@ -197,23 +197,16 @@ set guioptions-=R           " remove scrollbar
 set guioptions-=l           " remove scrollbar
 set guioptions-=L           " remove scrollbar
 set gcr=a:blinkon0          " turn of the blinking cursor
+
 " toggle bg for (solarized colorscheme)
 nnoremap <leader>bg :call ToggleBackground()<cr>
-let g:is_light = 1
-function! ToggleBackground()
-    if g:is_light
-        set background=dark
-        let g:is_light = 0
 
-        " gitgutter colors
-        highlight clear SignColumn
-        highlight GitGutterAdd ctermfg=green guifg=green
-        highlight GitGutterChange ctermfg=yellow guifg=yellow
-        highlight GitGutterDelete ctermfg=red guifg=red
-        highlight GitGutterChangeDelete ctermfg=yellow guifg=yellow
-    else
+let g:solarized = "/Users/lui/.solarized"
+let g:is_light = eval(readfile(g:solarized)[0])
+function! SetBackground(is_light)
+    if a:is_light
         set background=light
-        let g:is_light = 1
+        call writefile([1], g:solarized)
 
         " gitgutter colors
         highlight clear SignColumn
@@ -221,8 +214,27 @@ function! ToggleBackground()
         highlight GitGutterChange ctermfg=yellow guifg=darkyellow
         highlight GitGutterDelete ctermfg=red guifg=darkred
         highlight GitGutterChangeDelete ctermfg=yellow guifg=darkyellow
-    endif
+    else
+        set background=dark
+        call writefile([0], g:solarized)
 
+        " gitgutter colors
+        highlight clear SignColumn
+        highlight GitGutterAdd ctermfg=green guifg=green
+        highlight GitGutterChange ctermfg=yellow guifg=yellow
+        highlight GitGutterDelete ctermfg=red guifg=red
+        highlight GitGutterChangeDelete ctermfg=yellow guifg=yellow
+    endif
+endfunction
+call SetBackground(g:is_light)
+
+function! ToggleBackground()
+    if g:is_light
+        let g:is_light = 0
+    else
+        let g:is_light = 1
+    endif
+    call SetBackground(g:is_light)
 endfunction
 
 " Powerline setup
