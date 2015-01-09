@@ -28,4 +28,5 @@ export LANG=en_US.UTF-8
 # You could just use `-g` instead, but I like being explicit
 complete -W "NSGlobalDomain" defaults
 
+# custom paths 
 export PATH=~/.pyenv/shims:$PATH

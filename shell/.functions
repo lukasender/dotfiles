@@ -73,3 +73,7 @@ function getcertnames() {
                 return 1
         fi
 }
+
+function killInstance() {
+	ps aux | grep \[i\]nstance | awk  '{ print $2 }' | xargs kill;
+}
