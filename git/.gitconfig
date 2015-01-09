@@ -1,32 +1,31 @@
 [user]
-	name = Lukas Ender
-	email = hello@lukasender.at
+    name = Lukas Ender
+    email = hello@lukasender.at
 
 [push]
-	default = current
+    default = current
 
 [alias]
-	lol = log --pretty=oneline --abbrev-commit --graph --decorate
-	lg = log --color --graph \
+    lol = log --pretty=oneline --abbrev-commit --graph --decorate
+    lg = log --color --graph \
              --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' \
              --abbrev-commit --
-	st = status
-	fixup = !git commit --fixup $(git rev-parse HEAD)
-	co = checkout
-	cm = commit
-	pu = push
-	pl = pull
-	remotes = remote -v
-	tags = tag -l
-	branches = branch -a
-	d = diff
+    st = status
+    fixup = !git commit --fixup $(git rev-parse HEAD)
+    co = checkout
+    cm = commit
+    pu = push
+    pl = pull
+    remotes = remote -v
+    tags = tag -l
+    branches = branch -a
+    d = diff
     dc = diff --cached
     ds = diff --staged
 
 [rebase]
-	autosquash = true
+    autosquash = true
 
 [core]
-	excludesfile = /Users/lui/.gitignore
-	precomposeunicode = false
-
+    excludesfile = /Users/lui/.gitignore
+    precomposeunicode = false
