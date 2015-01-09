@@ -21,11 +21,13 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'airblade/vim-gitgutter'
 Plug 'klen/python-mode'
 Plug 'davidhalter/jedi-vim'
-" Plug 'pangloss/vim-javascript'
 Plug 'scrooloose/syntastic'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-scripts/dbext.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
+" JavaScript Plugins
+Plug 'jelera/vim-javascript-syntax'
+Plug 'elzr/vim-json'
 
 call plug#end() " handles 'filetype off', 'filetype plugin indent on' and
                 " 'syntax on' automatically
@@ -50,6 +52,7 @@ set autoindent                  " always set autoindenting on
 set copyindent                  " copy the previous indentation on autoindenting
 set number                      " always show line numbers
 set relativenumber
+nnoremap <F3> :set nonumber! norelativenumber!<CR>
 set ruler
 set shiftwidth=4                " number of spaces to use for autoindenting
 set shiftround                  " use multiple of shiftwidth when indenting with '<' and '>'
@@ -103,6 +106,7 @@ set ttyfast                     " indicate a fast connection
 
 if has('autocmd')
     autocmd filetype python set expandtab
+    autocmd FileType javascript call JavaScriptFold()
     autocmd! BufWritePost .vimrc nested source $MYVIMRC
 endif
 
@@ -162,6 +166,10 @@ nnoremap <leader>a :Ag
 " Use shift-H and shift-L for move to beginning/end
 nnoremap H 0
 nnoremap L $
+
+" open file located next to current one in this buffer
+nnoremap <localleader>e :e <C-R>=expand("%:p:h") . "/" <CR>
+nnoremap <localleader>vs :vs <C-R>=expand("%:p:h") . "/" <CR>
 
 " Highlight all instances of word under cursor, when idle.
 " Useful when studying strange source code.
@@ -255,11 +263,15 @@ let g:pymode_lint_mccabe_complexity = 20
 let g:pymode_rope = 0
 let g:pymode_lint_minheight = 8
 let g:pymode_lint_maxheight = 10
+let g:pymode_rope_goto_definition_cmd = 'vnew'
 let g:pymode_lint_ignore = "C0110,F0401,W0403,E123,E124,E126"
 
-" syntastic config
+" syntastic config (external linters)
 let g:syntastic_javascript_checkers = ['jshint'] " requires 'npm -g install jshint'
 let g:syntastic_json_checkers = ['jsonlint'] " requires npm install -g jsonlint
+
+" vim-json
+let g:vim_json_syntax_conceal = 0
 
 " gitgutter colors
 highlight clear SignColumn
