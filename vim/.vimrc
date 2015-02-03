@@ -18,6 +18,7 @@ Plug 'kien/ctrlp.vim'
 Plug 'Lokaltog/powerline', { 'rtp': 'powerline/bindings/vim/' }
 Plug 'vim-scripts/taglist.vim'
 Plug 'altercation/vim-colors-solarized'
+Plug 'jnurmine/Zenburn'
 Plug 'airblade/vim-gitgutter'
 Plug 'klen/python-mode'
 Plug 'davidhalter/jedi-vim'
@@ -113,7 +114,6 @@ endif
 if &t_Co >= 256 || has("gui_running")
     set background=light
     colorscheme solarized
-    "colorscheme mustang
 endif
 
 set list
@@ -131,8 +131,13 @@ highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%81v.\+/
 
 " window management
+" """""""""""""""""
+" open splits
 nnoremap <leader>v <C-w>v<C-w>l
 nnoremap <leader>h <C-w>s<C-w>j
+set splitbelow
+set splitright
+" movement
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -151,6 +156,9 @@ nnoremap <C-l> <C-w>l
 :cnoremap <Esc>d <S-right><Delete>
 :cnoremap <C-g>  <C-c>
 
+" copy what has been pasted
+xnoremap p pgvy
+
 " Quote words under cursor
 nnoremap <leader>" viW<esc>a"<esc>gvo<esc>i"<esc>gvo<esc>3l
 nnoremap <leader>' viW<esc>a'<esc>gvo<esc>i'<esc>gvo<esc>3l
@@ -168,8 +176,8 @@ nnoremap H 0
 nnoremap L $
 
 " open file located next to current one in this buffer
-nnoremap <localleader>e :e <C-R>=expand("%:p:h") . "/" <CR>
-nnoremap <localleader>vs :vs <C-R>=expand("%:p:h") . "/" <CR>
+nnoremap <leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
+nnoremap <leader>ve :vs <C-R>=expand("%:p:h") . "/" <CR>
 
 " Highlight all instances of word under cursor, when idle.
 " Useful when studying strange source code.
@@ -214,6 +222,7 @@ let g:is_light = eval(readfile(g:solarized)[0])
 function! SetBackground(is_light)
     if a:is_light
         set background=light
+        colorscheme solarized
         call writefile([1], g:solarized)
 
         " gitgutter colors
@@ -224,14 +233,11 @@ function! SetBackground(is_light)
         highlight GitGutterChangeDelete ctermfg=yellow guifg=darkyellow
     else
         set background=dark
+        colorscheme zenburn
         call writefile([0], g:solarized)
 
         " gitgutter colors
         highlight clear SignColumn
-        highlight GitGutterAdd ctermfg=green guifg=green
-        highlight GitGutterChange ctermfg=yellow guifg=yellow
-        highlight GitGutterDelete ctermfg=red guifg=red
-        highlight GitGutterChangeDelete ctermfg=yellow guifg=yellow
     endif
 endfunction
 call SetBackground(g:is_light)
