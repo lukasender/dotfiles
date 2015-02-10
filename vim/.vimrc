@@ -8,7 +8,7 @@ call pathogen#infect()
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeClose', 'NERDTreeFocus'] }
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
@@ -75,6 +75,8 @@ vnoremap / /\v
 nnoremap <C-e> 2<C-e>
 nnoremap <C-y> 2<C-y>
 
+set timeoutlen=500
+
 set textwidth=79
 set formatoptions=qrn1
 set colorcolumn=80
@@ -104,9 +106,10 @@ set cursorline                  " highlight cursor line
 set cmdheight=2                 " use a status bar that is 2 rows high
 
 set ttyfast                     " indicate a fast connection
+set lazyredraw
 
 if has('autocmd')
-    autocmd filetype python set expandtab
+    autocmd FileType python set expandtab
     autocmd FileType javascript call JavaScriptFold()
     autocmd! BufWritePost .vimrc nested source $MYVIMRC
 endif
@@ -300,6 +303,8 @@ let NERDTreeShowBookmarks=1
 " Show hidden files, too
 let NERDTreeShowFiles=1
 let NERDTreeShowHidden=1
+
+let NERDTreeShowLineNumbers=1
 
 " Quit on opening files from the tree
 let NERDTreeQuitOnOpen=1
