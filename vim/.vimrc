@@ -1,11 +1,6 @@
 " Use vim instead of vi settings.
 set nocompatible
 
-" Use pathogen to easily modify the runtime path to include all
-" plugins unter the ~/.vim/bundle directory
-call pathogen#helptags()
-call pathogen#infect()
-
 call plug#begin('~/.vim/plugged')
 
 Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeClose', 'NERDTreeFocus'] }
@@ -192,7 +187,7 @@ function! AutoHighlightToggle()
   if exists('#auto_highlight')
     au! auto_highlight
     augroup! auto_highlight
-    setl updatetime=4000
+    setl updatetime=300
     echo 'Highlight current word: off'
     return 0
   else
@@ -329,7 +324,7 @@ map <F2> :NERDTreeToggle<CR>
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " shortcut to jump to next conflict marker
-nnoremap <silent> <leader>c /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
+nnoremap <silent> <leader>mc /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
 " }}}
 
 
