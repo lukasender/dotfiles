@@ -15,6 +15,14 @@ function bg_init() {
 bg_init
 clear
 
+function parse_changes() {
+    # parses the CHANGES ($1) for given git-revision range
+    # e.g. ./parse_change CHANGES.rst 0.14.3..0.15.0
+    CHANGESFILE=$1
+    REVISION_RANGE=$2
+    git diff $REVISION_RANGE -- $CHANGESFILE | sed '/^\(+\)/!d' | sed s/^+// | sed '/^+/d'
+}
+
 # Mark - http://jeroenjanssens.com/2013/08/16/quickly-navigate-your-filesystem-from-the-command-line.html
 export MARKPATH=$HOME/.marks
 function jump {
