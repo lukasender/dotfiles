@@ -1,10 +1,8 @@
 function bg_dark() {
-    echo -e "\033]50;SetProfile=Zenburn\a"; echo "Zenburn"
-    clear
+    echo -e "\033]50;SetProfile=Zenburn\a";
 }
 function bg_light() {
-    echo -e "\033]50;SetProfile=Solarized Light\a"; echo "Solarized Light"
-    clear
+    echo -e "\033]50;SetProfile=Solarized Light\a";
 }
 function bg_init() {
     # sync with VIM settings
@@ -15,6 +13,7 @@ function bg_init() {
     fi
 }
 bg_init
+clear
 
 # Mark - http://jeroenjanssens.com/2013/08/16/quickly-navigate-your-filesystem-from-the-command-line.html
 export MARKPATH=$HOME/.marks
