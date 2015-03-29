@@ -22,6 +22,7 @@ echo 'time to brew!'
 echo '-------------'
 
 while read line; do brew install "$line"; done < formulas
+while read line; do brew cask install "$line"; done < formulas-cask
 
 brew linkapps
 
