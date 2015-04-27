@@ -53,12 +53,14 @@ pcre
 pkg-config
 postgresql
 proj
+pstree
 pyenv
 pyenv-virtualenv
 readline
 s3cmd
 scala
 sqlite
+sshfs
 stow
 the_silver_searcher
 tmux
