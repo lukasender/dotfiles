@@ -140,6 +140,10 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+nnoremap <silent> <C-F9> :exe "resize +5"<CR>
+nnoremap <silent> <C-F10> :exe "resize -5"<CR>
+nnoremap <silent> <C-F11> :exe "vertical resize +5"<CR>
+nnoremap <silent> <C-F12> :exe "vertical resize -5"<CR>
 
 " make VIM command line movement behave like a modern command line
 :cnoremap <C-a>  <Home>
