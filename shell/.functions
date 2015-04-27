@@ -99,6 +99,18 @@ function getcertnames() {
         fi
 }
 
-function killInstance() {
-	ps aux | grep \[i\]nstance | awk  '{ print $2 }' | xargs kill;
+function bsd() {
+    bin/supervisord
+}
+function bsc() {
+    bin/supervisorctl $@
+}
+function bsr() {
+    bin/supervisorctl restart $@
+}
+function bbo() {
+    bin/buildout $@
+}
+function azki() {
+    ps aux | grep \[i\]nstance | awk  '{ print $2 }' | xargs kill;
 }
