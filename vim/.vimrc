@@ -6,14 +6,12 @@ call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeClose', 'NERDTreeFocus'] }
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-characterize'
 Plug 'rking/ag.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'Lokaltog/powerline', { 'rtp': 'powerline/bindings/vim/' }
-Plug 'vim-scripts/taglist.vim'
-Plug 'altercation/vim-colors-solarized'
-Plug 'jnurmine/Zenburn'
+Plug 'majutsushi/tagbar'
+Plug 'godlygeek/tabular'
 Plug 'airblade/vim-gitgutter'
 Plug 'klen/python-mode'
 Plug 'davidhalter/jedi-vim'
@@ -24,6 +22,12 @@ Plug 'Glench/Vim-Jinja2-Syntax'
 " JavaScript Plugins
 Plug 'jelera/vim-javascript-syntax'
 Plug 'elzr/vim-json'
+" themes
+Plug 'altercation/vim-colors-solarized'
+Plug 'jnurmine/Zenburn'
+" git
+Plug 'tpope/vim-fugitive'
+Plug 'gregsexton/gitv'
 
 call plug#end() " handles 'filetype off', 'filetype plugin indent on' and
                 " 'syntax on' automatically
@@ -265,6 +269,12 @@ nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 inoremap <c-u> <esc>viwUea
 nnoremap <c-u> viwUe
 
+" Tagbar
+nnoremap <leader>tt :TagbarToggle<CR>
+nnoremap <leader>to :TagbarOpen<CR>
+nnoremap <leader>tf :TagbarTogglePause<CR>
+let g:tagbar_autoclose = 1
+
 " klen/python-mode
 let g:pymode_lint_checker = "pep8,pyflakes"
 let g:pymode_lint_mccabe_complexity = 20
@@ -277,6 +287,10 @@ let g:pymode_lint_ignore = "C0110,F0401,W0403,E123,E124,E126"
 " syntastic config (external linters)
 let g:syntastic_javascript_checkers = ['jshint'] " requires 'npm -g install jshint'
 let g:syntastic_json_checkers = ['jsonlint'] " requires npm install -g jsonlint
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
 
 " vim-json
 let g:vim_json_syntax_conceal = 0
