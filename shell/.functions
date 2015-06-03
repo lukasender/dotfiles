@@ -108,6 +108,10 @@ function bsc() {
 function bsr() {
     bin/supervisorctl restart $@
 }
+function bsrr() {
+    # 'r'estart 'r'unning processes
+    bin/supervisorctl restart $(bin/supervisorctl status | grep RUNNING | cut -d' ' -f1)
+}
 function bbo() {
     bin/buildout $@
 }
