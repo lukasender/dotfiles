@@ -310,6 +310,14 @@ let g:pymode_lint_maxheight = 10
 let g:pymode_rope_goto_definition_cmd = 'vnew'
 let g:pymode_lint_ignore = "C0110,F0401,W0403,E123,E124,E126"
 
+" Python
+if has('autocmd')
+    autocmd BufRead *.py nmap <F4> oclass Dbg(object):<esc>oactive = False<esc>oDEBUGGER = Dbg()<esc>V<
+    autocmd BufRead *.py nmap <F5> oif DEBUGGER.active:<esc>oimport pdb; pdb.set_trace()<esc>
+    autocmd BufRead *.{txt,rst,py} nmap <F6> o>>> from ... import DEBUGGER<esc>o>>> DEBUGGER.active = True<esc>k0f.ve
+    autocmd BufRead *.zcml set filetype=xml
+endif
+
 " JavaScript
 if has('autocmd')
     autocmd FileType javascript call JavaScriptFold()
