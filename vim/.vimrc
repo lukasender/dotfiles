@@ -34,7 +34,7 @@ call plug#end() " handles 'filetype off', 'filetype plugin indent on' and
                 " 'syntax on' automatically
 
 " change the mapleader from \ to ,
-let mapleader=","
+let mapleader="\<Space>"
 
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $VIMRC<CR>
