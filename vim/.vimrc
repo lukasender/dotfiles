@@ -179,6 +179,15 @@ vnoremap <leader>' <esc>a'<esc>gvo<esc>i'<esc>gvo<esc>ll
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
+" quick save
+nnoremap <leader>w :w
+
+" Search and replace: /searchpattern -> replace with 'cs replacement, ESC'
+" -> go to next search result and replace with 'n.n.n.n.n....'
+vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
+    \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
+omap s :normal vs<CR>
+
 " Ag
 nnoremap <leader>a :Ag
 
