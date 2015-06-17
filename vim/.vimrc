@@ -110,7 +110,6 @@ set lazyredraw
 
 if has('autocmd')
     autocmd FileType python set expandtab
-    autocmd FileType javascript call JavaScriptFold()
     autocmd! BufWritePost .vimrc nested source $MYVIMRC
 endif
 
@@ -310,6 +309,14 @@ let g:pymode_lint_minheight = 8
 let g:pymode_lint_maxheight = 10
 let g:pymode_rope_goto_definition_cmd = 'vnew'
 let g:pymode_lint_ignore = "C0110,F0401,W0403,E123,E124,E126"
+
+" JavaScript
+if has('autocmd')
+    autocmd FileType javascript call JavaScriptFold()
+    autocmd FileType javascript set tabstop=2  " a tab is two spaces
+    autocmd FileType javascript set softtabstop=2
+    autocmd FileType javascript set shiftwidth=2
+endif
 
 " syntastic config (external linters)
 let g:syntastic_javascript_checkers = ['eslint'] " requires 'npm -g install eslint'
