@@ -19,6 +19,7 @@ Plug 'scrooloose/syntastic'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-scripts/dbext.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'terryma/vim-expand-region'
 " JavaScript Plugins
 Plug 'jelera/vim-javascript-syntax'
 Plug 'elzr/vim-json'
@@ -173,6 +174,10 @@ nnoremap <leader>' viW<esc>a'<esc>gvo<esc>i'<esc>gvo<esc>3l
 " TODO: This only works for selections that are created 'forwardly'
 vnoremap <leader>" <esc>a"<esc>gvo<esc>i"<esc>gvo<esc>ll
 vnoremap <leader>' <esc>a'<esc>gvo<esc>i'<esc>gvo<esc>ll
+
+" Region expand with vvv...
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
 
 " Ag
 nnoremap <leader>a :Ag
