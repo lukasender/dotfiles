@@ -303,7 +303,7 @@ let g:pymode_rope_goto_definition_cmd = 'vnew'
 let g:pymode_lint_ignore = "C0110,F0401,W0403,E123,E124,E126"
 
 " syntastic config (external linters)
-let g:syntastic_javascript_checkers = ['jshint'] " requires 'npm -g install jshint'
+let g:syntastic_javascript_checkers = ['eslint'] " requires 'npm -g install eslint'
 let g:syntastic_json_checkers = ['jsonlint'] " requires npm install -g jsonlint
 let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 0
