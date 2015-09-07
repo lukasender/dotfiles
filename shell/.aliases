@@ -13,6 +13,7 @@ alias h="history"
 alias j="jobs"
 alias v="vim"
 alias m="mvim"
+alias m.="mvim ."
 alias s="subl ."
 alias o="open"
 alias oo="open ."
@@ -99,6 +100,7 @@ alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && k
 
 # URL-encode strings
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
+alias urldecode='python -c "import sys, urllib as ul; print ul.unquote(sys.argv[1]).decode(\"utf-8\");"'
 
 # Merge PDF files
 # Usage: `mergepdf -o output.pdf input{1,2,3}.pdf`
