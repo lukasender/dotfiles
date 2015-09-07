@@ -105,6 +105,9 @@ function bsd() {
 function bsc() {
     bin/supervisorctl $@
 }
+function bst() {
+    bin/supervisorctl status
+}
 function bsr() {
     bin/supervisorctl restart $@
 }
@@ -117,4 +120,63 @@ function bbo() {
 }
 function azki() {
     ps aux | grep \[i\]nstance | awk  '{ print $2 }' | xargs kill;
+}
+
+function start_az() {
+    (cd ~/sandbox/az.app && bsd; bst)
+}
+function stop_az() {
+    azki
+    (cd ~/sandbox/az.app && bsc stop all && bsc shutdown)
+}
+function status_az() {
+    echo 'az.app'
+    echo '------'
+    (cd ~/sandbox/az.app && bst)
+}
+function start_rawr() {
+    (cd ~/sandbox/rawr-service && bsd; bst)
+    (cd ~/sandbox/rawr-web && bsd; bst)
+    (cd ~/sandbox/rawr-admin && bsd; bst)
+}
+function stop_rawr() {
+    (cd ~/sandbox/rawr-service && bsc stop all && bsc shutdown)
+    (cd ~/sandbox/rawr-web && bsc stop all && bsc shutdown)
+    (cd ~/sandbox/rawr-admin && bsc stop all && bsc shutdown)
+}
+function status_rawr() {
+    echo 'Service'
+    echo '-------'
+    (cd ~/sandbox/rawr-service && bst)
+    echo ''
+    echo 'Web'
+    echo '---'
+    (cd ~/sandbox/rawr-web && bst)
+    echo ''
+    echo 'Admin'
+    echo '-----'
+    (cd ~/sandbox/rawr-admin && bst)
+}
+function start_waf() {
+    (cd ~/sandbox/waf-service && bsd; bst)
+    (cd ~/sandbox/waf-web && bsd; bst)
+    (cd ~/sandbox/waf-admin && bsd; bst)
+}
+function stop_waf() {
+    (cd ~/sandbox/waf-service && bsc stop all && bsc shutdown)
+    (cd ~/sandbox/waf-web && bsc stop all && bsc shutdown)
+    (cd ~/sandbox/waf-admin && bsc stop all && bsc shutdown)
+}
+function status_waf() {
+    echo 'Service'
+    echo '-------'
+    (cd ~/sandbox/waf-service && bst)
+    echo ''
+    echo 'Web'
+    echo '---'
+    (cd ~/sandbox/waf-web && bst)
+    echo ''
+    echo 'Admin'
+    echo '-----'
+    (cd ~/sandbox/waf-admin && bst)
 }
