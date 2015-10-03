@@ -3,6 +3,7 @@ set nocompatible
 
 call plug#begin('~/.vim/plugged')
 
+"""" Editor & Misc
 Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeClose', 'NERDTreeFocus'] }
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
@@ -12,22 +13,25 @@ Plug 'kien/ctrlp.vim'
 Plug 'Lokaltog/powerline', { 'rtp': 'powerline/bindings/vim/' }
 Plug 'majutsushi/tagbar'
 Plug 'godlygeek/tabular'
-Plug 'airblade/vim-gitgutter'
-Plug 'klen/python-mode'
-Plug 'scrooloose/syntastic'
+Plug 'terryma/vim-expand-region'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-scripts/dbext.vim'
+"""" Language supports
+Plug 'scrooloose/syntastic'
+" Python
+Plug 'klen/python-mode'
+" Jinja
 Plug 'Glench/Vim-Jinja2-Syntax'
-Plug 'terryma/vim-expand-region'
 " JavaScript Plugins
 Plug 'jelera/vim-javascript-syntax'
 Plug 'elzr/vim-json'
-" themes
+"""" Themes
 Plug 'altercation/vim-colors-solarized'
 Plug 'jnurmine/Zenburn'
-" git
+"""" Git
 Plug 'tpope/vim-fugitive'
 Plug 'gregsexton/gitv'
+Plug 'airblade/vim-gitgutter'
 
 call plug#end() " handles 'filetype off', 'filetype plugin indent on' and
                 " 'syntax on' automatically
@@ -123,6 +127,9 @@ set listchars=tab:··,trail:·,extends:#,nbsp:·
 nnoremap - :
 " clear the search buffer by simply pressing '//' twice
 nmap <silent> // :nohlsearch<CR>
+
+" Search 'ag'
+let g:ag_working_path_mode="r"
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 " http://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work
@@ -233,6 +240,18 @@ function! AutoHighlightToggle()
     return 1
   endif
 endfunction
+
+" make 'ordered' list.
+" Select block-wise (ctrl-v), press ctrl-a. done.
+function! Incr()
+  let a = line('.') - line("'<")
+  let c = virtcol("'<")
+  if a > 0
+    execute 'normal! '.c.'|'.a."\<C-a>"
+  endif
+  normal `<
+endfunction
+vnoremap <C-a> :call Incr()<CR>
 
 "Use Ctrl-TAB to complete when typing words, else inserts TABs as usual.
 "Uses dictionary and source files to find matching words to complete.
