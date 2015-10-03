@@ -180,3 +180,8 @@ function status_waf() {
     echo '-----'
     (cd ~/sandbox/waf-admin && bst)
 }
+
+function fix_homebrew_permissions() {
+    # https://github.com/Homebrew/homebrew/blob/master/share/doc/homebrew/El_Capitan_and_Homebrew.md
+    sudo chown -R $(whoami):admin /usr/local
+}

@@ -31,3 +31,5 @@ complete -W "NSGlobalDomain" defaults
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
     . $(brew --prefix)/etc/bash_completion
 fi
+
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
