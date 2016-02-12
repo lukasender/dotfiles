@@ -15,12 +15,34 @@ function bg_init() {
 bg_init
 clear
 
+function git_latest_tag() {
+  git for-each-ref --sort=taggerdate --format '%(refname)' refs/tags \
+    | tail -n 1 \
+    | sed 's/refs\/tags\///'
+}
+
+function git_next_to_latest_tag() {
+  git for-each-ref --sort=taggerdate --format '%(refname)' refs/tags \
+    | tail -n 2 | head -n 1 \
+    | sed 's/refs\/tags\///'
+}
+
 function parse_changes() {
     # parses the CHANGES ($1) for given git-revision range
     # e.g. ./parse_change CHANGES.rst 0.14.3..0.15.0
     CHANGESFILE=$1
     REVISION_RANGE=$2
+    if [ -z "$REVISION_RANGE"]
+      then
+        REVISION_RANGE=$(git_next_to_latest_tag)
+    fi
     git diff $REVISION_RANGE -- $CHANGESFILE | sed '/^\(+\)/!d' | sed s/^+// | sed '/^+/d'
+}
+
+function get_commit_msg() {
+    CHANGESFILE=$1
+    msg=$(git dc -- $CHANGESFILE | sed '/^\(+\)/!d' | sed s/^+// | sed '/^+/d' | sed \$d | sed s/^' '-' '//)
+    printf "$msg"
 }
 
 # Mark - http://jeroenjanssens.com/2013/08/16/quickly-navigate-your-filesystem-from-the-command-line.html
