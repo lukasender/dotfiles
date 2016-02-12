@@ -47,6 +47,8 @@ nmap <silent> <leader>sv :so $VIMRC<CR>
 set encoding=utf-8
 set termencoding=utf-8
 
+set spell spelllang=en_gb
+
 set hidden                      " hide buffers instead of closing them
 set nowrap                      " do not wrap lines
 set tabstop=4                   " a tab is four spaces
