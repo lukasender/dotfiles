@@ -16,6 +16,7 @@ Plug 'godlygeek/tabular'
 Plug 'terryma/vim-expand-region'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-scripts/dbext.vim'
+Plug 'diepm/vim-rest-console'
 """" Language supports
 Plug 'scrooloose/syntastic'
 " Python
