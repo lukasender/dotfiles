@@ -368,7 +368,7 @@ let g:pymode_rope = 0
 let g:pymode_lint_minheight = 8
 let g:pymode_lint_maxheight = 10
 let g:pymode_rope_goto_definition_cmd = 'vnew'
-let g:pymode_lint_ignore = "C0110,F0401,W0403,E123,E124,E126"
+let g:pymode_lint_ignore = "C901,C0110,F0401,W0403,E123,E124,E126"
 
 " Python
 if has('autocmd')
