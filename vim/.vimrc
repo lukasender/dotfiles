@@ -425,7 +425,6 @@ endif
 
 " JavaScript
 if has('autocmd')
-    autocmd FileType javascript call JavaScriptFold()
     autocmd FileType javascript set tabstop=2  " a tab is two spaces
     autocmd FileType javascript set softtabstop=2
     autocmd FileType javascript set shiftwidth=2
