@@ -32,11 +32,30 @@ function parse_changes() {
     # e.g. ./parse_change CHANGES.rst 0.14.3..0.15.0
     CHANGESFILE=$1
     REVISION_RANGE=$2
-    if [ -z "$REVISION_RANGE"]
+    if [ -z "$REVISION_RANGE" ]
       then
         REVISION_RANGE=$(git_next_to_latest_tag)
     fi
     git diff $REVISION_RANGE -- $CHANGESFILE | sed '/^\(+\)/!d' | sed s/^+// | sed '/^+/d'
+}
+
+function compile_changelog() {
+    WHAT=$1
+    FROM=$2
+    TO=$3
+    FORMAT=$4
+    printf $WHAT'\n'
+    printf '=%.0s' {1..$(seq 1 ${#WHAT})}
+    printf '\n\n'
+    if [[ "$FORMAT" == "md" ]]
+    then
+        printf '```\n'
+    fi
+    (cd ~/sandbox/$WHAT/ && parse_changes CHANGES.rst $FROM..$TO)
+    if [[ "$FORMAT" == "md" ]]
+    then
+        printf '```\n'
+    fi
 }
 
 function get_commit_msg() {
