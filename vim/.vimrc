@@ -269,6 +269,46 @@ function! AutoHighlightToggle()
   endif
 endfunction
 
+" use 'NewRelease <version>'
+" where <version> is one of 'patch', 'minor', or 'major'
+"
+" Searches for the next yyyy/mm/dd 0.0.0 entry, gets the version part,
+" goes back to where you started, places the current date + the increased
+" version part
+function! DoNewRelease(version)
+  " print the current date
+  execute "normal! i" . strftime("%Y/%m/%d") . " "
+  " find next date and go to it:
+  execute "normal! " . '/\v\d+\/\d+\/\d+' . "\<cr>"
+  " find next version and go to it:
+  execute "normal! " . '/\v\d+\.\d+\.\d+' . "\<cr>"
+  " yank the version, go back & paste it
+  execute "normal! v4eyg,p"
+
+  if a:version ==? 'patch'
+    " increase patch
+    execute "normal! \<C-a>"
+  elseif a:version ==? 'minor'
+    " reset patch
+    execute "normal! bd$a.0"
+    " increase minor
+    execute "normal! bb\<C-a>"
+  elseif a:version ==? 'major'
+    " reset patch & minor
+    execute "normal! bbd$a0.0"
+    " reset major
+    execute "normal! bbbb\<C-a>"
+  endif
+
+  " get the current line length
+  " and place '=' x times below it
+  let line = getline('.')
+  let lng = len(line)
+  echom lng
+  execute "normal! o\<C-o>" . lng . "i=\<Esc>"
+endfunction
+command! -nargs=1 NewRelease call DoNewRelease(<f-args>)
+
 " make 'ordered' list.
 " Select block-wise (ctrl-v), press ctrl-a. done.
 function! Incr()
