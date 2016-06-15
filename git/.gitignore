@@ -1,5 +1,6 @@
 # Compiled Python files
 *.pyc
+.python-version
 
 # Folder view configuration files
 .DS_Store
@@ -19,3 +20,6 @@ Thumbs.db
 
 # Searchtools
 .agignore
+
+cscope.files
+.nvmrc
