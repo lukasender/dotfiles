@@ -17,6 +17,7 @@ Plug 'terryma/vim-expand-region'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-scripts/dbext.vim'
 Plug 'diepm/vim-rest-console'
+Plug 'pbrisbin/vim-mkdir'
 """" Language supports
 Plug 'scrooloose/syntastic'
 " Python
@@ -26,6 +27,8 @@ Plug 'Glench/Vim-Jinja2-Syntax'
 " JavaScript Plugins
 Plug 'jelera/vim-javascript-syntax'
 Plug 'elzr/vim-json'
+" Elixir
+Plug 'elixir-lang/vim-elixir'
 """" Themes
 Plug 'altercation/vim-colors-solarized'
 Plug 'jnurmine/Zenburn'
