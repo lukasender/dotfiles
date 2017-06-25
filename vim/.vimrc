@@ -29,13 +29,17 @@ Plug 'jelera/vim-javascript-syntax'
 Plug 'elzr/vim-json'
 " Elixir
 Plug 'elixir-lang/vim-elixir'
+" Elm
+Plug 'lambdatoast/elm.vim'
 """" Themes
 Plug 'altercation/vim-colors-solarized'
 Plug 'jnurmine/Zenburn'
+Plug 'w0ng/vim-hybrid'
 """" Git
 Plug 'tpope/vim-fugitive'
 Plug 'gregsexton/gitv'
 Plug 'airblade/vim-gitgutter'
+Plug 'rizzatti/dash.vim'
 
 call plug#end() " handles 'filetype off', 'filetype plugin indent on' and
                 " 'syntax on' automatically
@@ -276,6 +280,12 @@ endfunction
 " goes back to where you started, places the current date + the increased
 " version part
 function! DoNewRelease(version)
+  " go to 'unreleased' section and add new lines
+  execute "normal! gg"
+  execute "normal! " . '/\vunreleased' . "\<cr>"
+  execute "normal! j"
+  execute "normal! o"
+  execute "normal! o"
   " print the current date
   execute "normal! i" . strftime("%Y/%m/%d") . " "
   " find next date and go to it:
@@ -370,7 +380,9 @@ function! SetBackground(is_light)
         highlight GitGutterChangeDelete ctermfg=yellow guifg=darkyellow
     else
         set background=dark
-        colorscheme zenburn
+        colorscheme hybrid
+        let g:hybrid_custom_term_colors = 1
+        let g:hybrid_reduced_contrast = 1
         call writefile([0], g:solarized)
 
         " gitgutter colors
@@ -428,6 +440,12 @@ if has('autocmd')
     autocmd FileType javascript set tabstop=2  " a tab is two spaces
     autocmd FileType javascript set softtabstop=2
     autocmd FileType javascript set shiftwidth=2
+    autocmd BufRead *.js.jinja2 set filetype=javascript
+endif
+
+" Elm
+if has('autocmd')
+    autocmd BufWritePost *.elm ElmMakeFile("Main.elm")
 endif
 
 " syntastic config (external linters)
