@@ -34,3 +34,6 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
 fi
 
 if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+
+export NVM_DIR="/Users/lui/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
