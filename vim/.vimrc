@@ -27,6 +27,8 @@ Plug 'Glench/Vim-Jinja2-Syntax'
 " JavaScript Plugins
 Plug 'jelera/vim-javascript-syntax'
 Plug 'elzr/vim-json'
+" TypeScript
+Plug 'leafgarland/typescript-vim'
 " Elixir
 Plug 'elixir-lang/vim-elixir'
 " Elm
@@ -40,6 +42,13 @@ Plug 'tpope/vim-fugitive'
 Plug 'gregsexton/gitv'
 Plug 'airblade/vim-gitgutter'
 Plug 'rizzatti/dash.vim'
+"""" Kotlin
+Plug 'udalov/kotlin-vim'
+""""
+" post install (yarn install | npm install) then load plugin only for editing supported files
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown'] }
 
 call plug#end() " handles 'filetype off', 'filetype plugin indent on' and
                 " 'syntax on' automatically
@@ -66,6 +75,7 @@ set autoindent                  " always set autoindenting on
 set copyindent                  " copy the previous indentation on autoindenting
 set number                      " always show line numbers
 set relativenumber
+set linespace=1
 nnoremap <F3> :set nonumber! norelativenumber!<CR>
 set ruler
 set shiftwidth=4                " number of spaces to use for autoindenting
@@ -103,7 +113,7 @@ endif
 set nobackup                    " do not keep backup files, it's 70's style cluttering
 set noswapfile                  " do not write annoying intermediate swap files,
                                 "    who did ever restore from swap files anyway?
-set directory=~/.vim/.tmp,~/tmp,/tmp
+set directory=~/.vim/.tmp,~/tmp/vimswap,/tmp
                                 " store swap files in one of these directories
                                 "    (in case swapfile is ever turned on)
 set wildmenu
@@ -133,6 +143,10 @@ endif
 
 set list
 set listchars=tab:··,trail:·,extends:#,nbsp:·
+
+if v:version > 703 || v:version == 703 && has('patch541')
+  set formatoptions+=j
+endif
 
 nnoremap - :
 " clear the search buffer by simply pressing '//' twice
@@ -319,6 +333,28 @@ function! DoNewRelease(version)
 endfunction
 command! -nargs=1 NewRelease call DoNewRelease(<f-args>)
 
+
+function! AddDbgClass()
+  execute "normal! oclass Dbg(object):"
+  execute "normal! oactive = False"
+  execute "normal! oDEBUGGER = Dbg()\<Esc>V<"
+endfunction
+command! Dbgcls call AddDbgClass()
+
+function! AddIfpdb()
+  execute "normal! oif DEBUGGER.active:"
+  execute "normal! oimport pdb; pdb.set_trace()"
+endfunction
+command! Ifpdb call AddIfpdb()
+
+function! AddDbgimport()
+  execute "normal! o>>> from ... import DEBUGGER"
+  execute "normal! o>>> DEBUGGER.active = True"
+  execute "normal! k0f.ce"
+endfunction
+command! Dbgimport call AddDbgimport()
+
+
 " make 'ordered' list.
 " Select block-wise (ctrl-v), press ctrl-a. done.
 function! Incr()
@@ -431,7 +467,7 @@ let g:pymode_lint_ignore = "C901,C0110,F0401,W0403,E123,E124,E126"
 if has('autocmd')
     autocmd BufRead *.py nmap <F4> oclass Dbg(object):<esc>oactive = False<esc>oDEBUGGER = Dbg()<esc>V<
     autocmd BufRead *.py nmap <F5> oif DEBUGGER.active:<esc>oimport pdb; pdb.set_trace()<esc>
-    autocmd BufRead *.{txt,rst,py} nmap <F6> o>>> from ... import DEBUGGER<esc>o>>> DEBUGGER.active = True<esc>k0f.ve
+    autocmd BufRead *.{txt,rst,py} nmap <F6> o>>> from ... import DEBUGGER<esc>o>>> DEBUGGER.active = True<esc>k0f.ce
     autocmd BufRead *.zcml set filetype=xml
 endif
 

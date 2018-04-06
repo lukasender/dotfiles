@@ -20,6 +20,8 @@ alias s="subl ."
 alias o="open"
 alias oo="open ."
 
+alias gitx="fork"
+
 #
 alias releases="g branches | grep release"
 

@@ -60,7 +60,9 @@ function compile_changelog() {
 
 function get_commit_msg() {
     CHANGESFILE=$1
-    msg=$(git dc -- $CHANGESFILE | sed '/^\(+\)/!d' | sed s/^+// | sed '/^+/d' | sed \$d | sed s/^' '-' '//)
+    #msg=$(git dc -- $CHANGESFILE | sed '/^\(+\)/!d' | sed s/^+// | sed '/^+/d' | sed \$d | sed s/^' '-' '//)
+    msg=$(git dc -- $CHANGESFILE | sed '/^\(+\)/!d' | sed s/^'+ - '// | sed '/^+/d')
+    #msg=$(git dc -- $CHANGESFILE | sed '/^\(+\)/!d' | sed s/^+// | sed '/^+/d' | sed s/^' '-' '//)
     printf "$msg"
 }
 
