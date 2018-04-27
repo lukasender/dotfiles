@@ -21,7 +21,7 @@ Plug 'pbrisbin/vim-mkdir'
 """" Language supports
 Plug 'scrooloose/syntastic'
 " Python
-Plug 'klen/python-mode'
+Plug 'python-mode/python-mode', { 'branch': 'develop' }
 " Jinja
 Plug 'Glench/Vim-Jinja2-Syntax'
 " JavaScript Plugins

@@ -14,7 +14,7 @@ if [[ ! -d $HOME/.config/ ]]; then
 fi
 
 stow --target=$HOME git
-stow --target=$HOME osx
+# stow --target=$HOME osx
 stow --target=$HOME shell
 stow --target=$HOME vim
 
