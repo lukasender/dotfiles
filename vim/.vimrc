@@ -296,8 +296,7 @@ endfunction
 function! DoNewRelease(version)
   " go to 'unreleased' section and add new lines
   execute "normal! gg"
-  execute "normal! " . '/\vunreleased' . "\<cr>"
-  execute "normal! j"
+  execute "normal! 2j"
   execute "normal! o"
   execute "normal! o"
   " print the current date
