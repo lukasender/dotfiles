@@ -1,6 +1,6 @@
 [user]
-    name = Lukas Ender
-    email = hello@lukasender.at
+	name = Lukas Ender
+	email = hello@lukasender.at
 
 [push]
     default = current
@@ -15,6 +15,7 @@
     co = checkout
     cm = commit
     pu = push
+    puf = push -f origin HEAD
     pl = pull
     remotes = remote -v
     tags = tag -l
@@ -22,6 +23,14 @@
     d = diff
     dc = diff --cached
     ds = diff --staged
+    rbom = rebase -p origin/master
+    rbc = rebase --continue
+    rba = rebase --abort
+    # pupr: 'git push origin <current-branch>, open Pull-Request on Github,
+    # assign myself, open Pull-Request in default browser
+    pupr = "!sh -c '\
+        hub pull-request --assign=lumannnn --push --no-edit --browse; \
+    ' -"
 
 [rebase]
     autosquash = true
