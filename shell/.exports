@@ -1,5 +1,5 @@
 # set editor
-export EDITOR='vim'
+export EDITOR='nvim'
 
 # Larger bash history (allow 32³ entries; default is 500)
 export HISTSIZE=32768
@@ -19,6 +19,17 @@ export GREP_OPTIONS="--color=auto"
 # .vimrc
 export VIMRC=~/.vimrc
 
-export C_INCLUDE_PATH=/usr/local/include
 export CPLUS_INCLUDE_PATH=/usr/local/include
-export LIBRARY_PATH=/usr/local/lib
+export C_INCLUDE_PATH=/usr/local/include:/usr/local/opt/openssl/include
+export LIBRARY_PATH=/usr/local/lib:/usr/local/opt/openssl/lib
+export LDFLAGS="-L/usr/local/opt/readline/lib -L/usr/local/opt/zlib/lib"
+export CPPFLAGS="-I/usr/local/opt/readline/include -I/usr/local/opt/zlib/include"
+
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:/usr/local/bin/geckodriver
+export PATH="$HOME/.rbenv/bin:$PATH"
+export PATH="/usr/local/opt/openssl/bin:$PATH"
+export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"
+export ERL_AFLAGS="-kernel shell_history enabled"

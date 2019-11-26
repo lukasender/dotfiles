@@ -1,7 +1,7 @@
 " Use vim instead of vi settings.
 set nocompatible
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.local/share/nvim/plugged')
 
 """" Editor & Misc
 Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeClose', 'NERDTreeFocus'] }
@@ -9,19 +9,27 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-characterize'
 Plug 'rking/ag.vim'
-Plug 'kien/ctrlp.vim'
-Plug 'Lokaltog/powerline', { 'rtp': 'powerline/bindings/vim/' }
+" enable fzf in Vim -> must be installed via homebrew first
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
+" Plug 'kien/ctrlp.vim'
 Plug 'majutsushi/tagbar'
 Plug 'godlygeek/tabular'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'terryma/vim-expand-region'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-scripts/dbext.vim'
 Plug 'diepm/vim-rest-console'
 Plug 'pbrisbin/vim-mkdir'
+Plug 'wesQ3/vim-windowswap'
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'SirVer/ultisnips'
 """" Language supports
 Plug 'scrooloose/syntastic'
-" Python
-Plug 'klen/python-mode'
+" ale: Check syntax (linting) and fix files asynchronously, with Language Server Protocol (LSP) integration in Vim
+Plug 'w0rp/ale'
 " Jinja
 Plug 'Glench/Vim-Jinja2-Syntax'
 " JavaScript Plugins
@@ -34,11 +42,12 @@ Plug 'elixir-lang/vim-elixir'
 " Elm
 Plug 'lambdatoast/elm.vim'
 """" Themes
-Plug 'altercation/vim-colors-solarized'
+Plug 'arakashic/nvim-colors-solarized'
 Plug 'jnurmine/Zenburn'
 Plug 'w0ng/vim-hybrid'
 """" Git
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'  " GitHub plugin for fugitive
 Plug 'gregsexton/gitv'
 Plug 'airblade/vim-gitgutter'
 Plug 'rizzatti/dash.vim'
@@ -112,13 +121,14 @@ if v:version >= 730
 endif
 set nobackup                    " do not keep backup files, it's 70's style cluttering
 set noswapfile                  " do not write annoying intermediate swap files,
+set nowritebackup
                                 "    who did ever restore from swap files anyway?
 set directory=~/.vim/.tmp,~/tmp/vimswap,/tmp
                                 " store swap files in one of these directories
                                 "    (in case swapfile is ever turned on)
 set wildmenu
 set wildmode=list:longest
-set wildignore=*.swp,*.bak,*.pyc,*.class
+set wildignore+=*.swp,*.bak,*.pyc,*.class
 set title                       " change the terminal's title
 set visualbell                  " don't beep
 set noerrorbells                " don't beep
@@ -130,15 +140,20 @@ set cmdheight=2                 " use a status bar that is 2 rows high
 
 set ttyfast                     " indicate a fast connection
 set lazyredraw
+" yank to pbcopy, paste from pbpaste
+set clipboard=unnamed
 
 if has('autocmd')
     autocmd FileType python set expandtab
     autocmd! BufWritePost .vimrc nested source $MYVIMRC
+    " run Prettier on file save
+    autocmd BufWritePre *.js :PrettierAsync
 endif
 
 if &t_Co >= 256 || has("gui_running")
-    set background=light
-    colorscheme solarized
+  set termguicolors
+  set background=light
+  colorscheme solarized
 endif
 
 set list
@@ -178,6 +193,19 @@ nnoremap <silent> <C-F9> :exe "resize +5"<CR>
 nnoremap <silent> <C-F10> :exe "resize -5"<CR>
 nnoremap <silent> <C-F11> :exe "vertical resize +5"<CR>
 nnoremap <silent> <C-F12> :exe "vertical resize -5"<CR>
+
+" swap windows (wesQ3/vim-windowswap)
+let g:windowswap_map_keys = 0 "prevent default bindings
+nnoremap <silent> <leader>yw :call WindowSwap#MarkWindowSwap()<CR>
+nnoremap <silent> <leader>pw :call WindowSwap#DoWindowSwap()<CR>
+nnoremap <silent> <leader>ff :call WindowSwap#EasyWindowSwap()<CR>
+
+" Snippets
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+nnoremap <silent> <C-p> :exe "Files"<CR>
 
 " handle tabs
 if has("gui_macvim")
@@ -230,30 +258,47 @@ vnoremap <leader>' <esc>a'<esc>gvo<esc>i'<esc>gvo<esc>ll
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
-" quick save
-nnoremap <leader>w :w
-
 " Search and replace: /searchpattern -> replace with 'cs replacement, ESC'
 " -> go to next search result and replace with 'n.n.n.n.n....'
 vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
     \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
 omap s :normal vs<CR>
 
-" Ag
-nnoremap <leader>a :Ag
-
 " CtrlP performance boost
-let g:ctrlp_use_caching = 0
-if executable('ag')
-    set grepprg=ag\ --nogroup\ --nocolor
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|build)|(\.(swp|ico|git|svn))$'
 
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-else
-  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
-  let g:ctrlp_prompt_mappings = {
-    \ 'AcceptSelection("e")': ['<space>', '<cr>', '<2-LeftMouse>'],
-    \ }
-endif
+" Deoplete Auto Completion Framework
+" requires:
+"   pip3 install neovim
+"   pip3 install --upgrade neovim
+"   pip3 install --user pynvim
+"let g:deoplete#enable_at_startup = 1
+
+" ---------------- Additional config for CoC
+set updatetime=300
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+" always show signcolumns
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" ---- End of: Additional config for CoC
 
 " Use shift-H and shift-L for move to beginning/end
 nnoremap H 0
@@ -435,10 +480,13 @@ function! ToggleBackground()
     call SetBackground(g:is_light)
 endfunction
 
-" Powerline setup
-set guifont=Inconsolata-dz\ for\ Powerline:h12
-set laststatus=2            " tell VIM to always put a status line in, even
-                            "    if there is only one window
+
+
+" Airline setup
+let g:airline_theme='solarized'
+let g:airline_powerline_fonts=0
+" set laststatus=2            " tell VIM to always put a status line in, even
+"                             "    if there is only one window
 
 " Strip all trailing whitespace from a file, using ,W
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
@@ -454,13 +502,13 @@ nnoremap <leader>tf :TagbarTogglePause<CR>
 let g:tagbar_autoclose = 1
 
 " klen/python-mode
-let g:pymode_lint_checker = "pep8,pyflakes"
-let g:pymode_lint_mccabe_complexity = 20
-let g:pymode_rope = 0
-let g:pymode_lint_minheight = 8
-let g:pymode_lint_maxheight = 10
-let g:pymode_rope_goto_definition_cmd = 'vnew'
-let g:pymode_lint_ignore = "C901,C0110,F0401,W0403,E123,E124,E126"
+" let g:pymode_lint_checker = "pep8,pyflakes"
+" let g:pymode_lint_mccabe_complexity = 20
+" let g:pymode_rope = 0
+" let g:pymode_lint_minheight = 8
+" let g:pymode_lint_maxheight = 10
+" let g:pymode_rope_goto_definition_cmd = 'vnew'
+" let g:pymode_lint_ignore = "C901,C0110,F0401,W0403,E123,E124,E126"
 
 " Python
 if has('autocmd')
@@ -484,7 +532,7 @@ if has('autocmd')
 endif
 
 " syntastic config (external linters)
-let g:syntastic_javascript_checkers = ['eslint'] " requires 'npm -g install eslint'
+let g:syntastic_javascript_checkers = ['prettier'] " requires 'npm -g install eslint'
 let g:syntastic_json_checkers = ['jsonlint'] " requires npm install -g jsonlint
 let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 0

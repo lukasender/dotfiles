@@ -24,3 +24,9 @@ Thumbs.db
 cscope.files
 .nvmrc
 npm-debug.log
+
+.pytest_cache
+.vscode
+
+# VS-Code extension
+.elixir_ls
