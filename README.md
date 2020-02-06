@@ -11,7 +11,7 @@ Fresh install
 
 Download:
 
-    git clone https://github.com/lumannnn/dotfiles.git
+    git clone https://github.com/lukasender/dotfiles.git
     cd dotfiles
     git submodule update --init --recursive
 
