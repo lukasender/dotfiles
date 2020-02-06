@@ -30,3 +30,9 @@ npm-debug.log
 
 # VS-Code extension
 .elixir_ls
+
+# 'asdf' project specific settings (`adsdf local <...> <...>`)
+.tool-versions
+
+# a result of 'zsh gradle plugin'
+.gradletasknamecache
